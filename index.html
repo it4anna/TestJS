@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Styles-->
     <link href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="index.css" rel="stylesheet">
-    <!-- todo: add comments to includs -->
+    <!-- Libs -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="libs/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="http://ejohn.org/files/pretty.js"></script>
+    <!-- Custom JS -->
     <script src="app.js"></script>
 </head>
 <body data-ng-app="testJS">
@@ -23,7 +25,7 @@
         <th>Reach</th>
         <th>PagesPerUser</th>
     </tr>
-    <tr row data-ng-repeat="item in items" data-ng-model="item"></tr>
+    <tr row data-ng-repeat="item in itemCollection" data-ng-model="item"></tr>
 </table>
 
 </body>

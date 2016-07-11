@@ -43,17 +43,17 @@ var BEmock = [
 var app = angular.module("testJS", []);
 
 app.controller('testJSCtrl', function ($scope) {
-    $scope.items = BEmock;
+    $scope.itemCollection = BEmock;
     $scope.isAllChecked = false;
 
     $scope.allCheckedClicked = function () {
-        angular.forEach($scope.items, function (item) {
+        angular.forEach($scope.itemCollection, function (item) {
             item.isChecked = $scope.isAllChecked;
         });
     };
 
     $scope.onCheckBoxChanged = function () {
-        $scope.isAllChecked = $scope.items.every(function (item) {
+        $scope.isAllChecked = $scope.itemCollection.every(function (item) {
             return item.isChecked;
         });
     };
@@ -95,18 +95,18 @@ app.directive("row", function () {
 app.filter('dateFormat', function ($filter) {
     return function (milliseconds) {
         var date = new Date(milliseconds),
-            millisecondsInDay = 86400,
+            minuteMillisec = 60,
+            hourMillisec = 3600,
+            dayMillisec = 86400,
             diffSeconds = (((new Date()).getTime() - date.getTime()) / 1000),
-            diffDays = Math.floor(diffSeconds / millisecondsInDay);
+            diffDays = Math.round(diffSeconds / dayMillisec);
 
-        return diffSeconds < 60 && "just now" ||
-            diffSeconds < 120 && "1 minute ago" ||
-            diffSeconds < 3600 && Math.floor(diffSeconds / 60) + " minutes ago" ||
-            diffSeconds < 7200 && "1 hour ago" ||
-            diffSeconds < millisecondsInDay && Math.floor(diffSeconds / 3600) + " hours ago" ||
+        return diffSeconds < minuteMillisec && "just now" ||
+            diffSeconds < hourMillisec && Math.round(diffSeconds / minuteMillisec) + " minute(s) ago" ||
+            diffSeconds < dayMillisec && Math.round(diffSeconds / minuteMillisec) + " hour(s) ago" ||
             diffDays == 1 && "Yesterday" ||
-            diffDays < 7 && diffDays + " days ago" ||
-            diffDays < 31 && Math.ceil(diffDays / 7) + " weeks ago" ||
+            diffDays < 7 && diffDays + " day(s) ago" ||
+            diffDays < 31 && Math.ceil(diffDays / 7) + " week(s) ago" ||
             $filter('date')(date);
     };
 });
