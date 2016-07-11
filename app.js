@@ -22,7 +22,7 @@ var BEmock = [
             {id: "m7", name: "Madogbolig.dk"}
         ],
         targetGroup: [],
-        lastRefresh: 1368119075831,
+        lastRefresh: 1458889075831,
         reach: 0.2,
         pagesPerUser: 3.123123
     },
@@ -34,7 +34,7 @@ var BEmock = [
             {id: "m8", name: "viunge.dk"}
         ],
         targetGroup: ["Gender - women", "Age - young"],
-        lastRefresh: 1468105045831,
+        lastRefresh: 1468105050831,
         reach: 0.05,
         pagesPerUser: 8
     }
@@ -45,26 +45,31 @@ var app = angular.module("testJS", []);
 app.controller('testJSCtrl', function ($scope) {
     $scope.items = BEmock;
     $scope.isAllChecked = false;
-    $scope.isAnyChecked = false;
 
-    $scope.$watch('isAllChecked', function () {
+    $scope.allCheckedClicked = function () {
         angular.forEach($scope.items, function (item) {
             item.isChecked = $scope.isAllChecked;
         });
-    });
+    };
+
+    $scope.onCheckBoxChanged = function () {
+        $scope.isAllChecked = $scope.items.every(function (item) {
+            return item.isChecked;
+        });
+    };
 });
 
 app.directive("row", function () {
     return {
-        template: '<td><input type="checkbox" data-ng-model="item.isChecked"></td> \
+        template: '<td><input type="checkbox" data-ng-model="item.isChecked" data-ng-change="onCheckBoxChanged()"></td> \
         <td>{{item.name}}</td> \
         <td>{{mediasNames}}</td> \
-        <td data-class="{empty: isEmpty}">{{targetGroups}}</td> \
+        <td data-ng-class="{empty: isEmpty}">{{targetGroups}}</td> \
         <td>{{item.lastRefresh | dateFormat}}</td> \
         <td>{{item.reach * 100}}%</td> \
         <td> \
         <div class="inline-block pages">{{item.pagesPerUser}}</div> \
-        <div data-include="\'drop_down.html\'" class="inline-block pull-right"></div> \
+        <div data-ng-include="\'drop_down.html\'" class="inline-block pull-right"></div> \
         </td>',
         controllerAs: 'rowCtrl',
         controller: function ($scope) {

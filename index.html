@@ -15,7 +15,7 @@
 <div data-ng-include="'menu.html'" class="inline-block pull-right menu"></div>
 <table data-ng-controller="testJSCtrl" style="width:100%" class="meadia_table">
     <tr>
-        <th><label><input type="checkbox" data-ng-model="isAllChecked"/></label></th>
+        <th><label><input type="checkbox" data-ng-click="allCheckedClicked()" data-ng-model="isAllChecked"/></label></th>
         <th>Name</th>
         <th>Medias</th>
         <th>TargetGroup</th>
