@@ -45,11 +45,18 @@ var app = angular.module("testJS", []);
 app.controller('testJSCtrl', function ($scope) {
     $scope.items = BEmock;
     $scope.isAllChecked = false;
+    $scope.isAnyChecked = false;
+
+    $scope.$watch('isAllChecked', function () {
+        angular.forEach($scope.items, function (item) {
+            item.isChecked = $scope.isAllChecked;
+        });
+    });
 });
 
 app.directive("row", function () {
     return {
-        template: '<td><input type="checkbox" data-model="isChecked"></td> \
+        template: '<td><input type="checkbox" data-ng-model="item.isChecked"></td> \
         <td>{{item.name}}</td> \
         <td>{{mediasNames}}</td> \
         <td data-class="{empty: isEmpty}">{{targetGroups}}</td> \
@@ -61,7 +68,7 @@ app.directive("row", function () {
         </td>',
         controllerAs: 'rowCtrl',
         controller: function ($scope) {
-            $scope.isChecked = false;
+            $scope.item.isChecked = false;
             $scope.isEmpty = false;
             $scope.targetGroups = '';
             $scope.mediasNames = '';
