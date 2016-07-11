@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="app.js"></script>
-<body>
-    <div ng-app="testJS" ng-controller="testJSCtrl">
-        <div row ng-repeat="item in items" ng-model="item"></div>
-    </div>
+<head>
+    <link href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="index.css" rel="stylesheet">
+    <!-- todo: add comments to includs -->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="libs/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="http://ejohn.org/files/pretty.js"></script>
+    <script src="app.js"></script>
+</head>
+<body data-ng-app="testJS">
+
+<div data-ng-include="'menu.html'" class="inline-block pull-right menu"></div>
+<table data-ng-controller="testJSCtrl" style="width:100%" class="meadia_table">
+    <tr>
+        <th><label><input type="checkbox" data-ng-model="isAllChecked"/></label></th>
+        <th>Name</th>
+        <th>Medias</th>
+        <th>TargetGroup</th>
+        <th>LastRefresh</th>
+        <th>Reach</th>
+        <th>PagesPerUser</th>
+    </tr>
+    <tr row data-ng-repeat="item in items" data-ng-model="item"></tr>
+</table>
+
 </body>
 </html>
