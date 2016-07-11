@@ -49,16 +49,16 @@ app.controller('testJSCtrl', function ($scope) {
 
 app.directive("row", function () {
     return {
-        template: '<td><input type="checkbox" data-model="isChecked"></td>' +
-        '<td>{{item.name}}</td>' +
-        '<td>{{mediasNames}}</td>' +
-        '<td data-class="{empty: isEmpty}">{{targetGroups}}</td>' +
-        '<td>{{item.lastRefresh | dateFormat}}</td>' +
-        '<td>{{item.reach * 100}}%</td>' +
-        '<td> ' +
-        '<div class="inline-block pages">{{item.pagesPerUser}}</div>' +
-        '<div data-include="\'drop_down.html\'" class="inline-block pull-right"></div>' +
-        '</td>',
+        template: '<td><input type="checkbox" data-model="isChecked"></td> \
+        <td>{{item.name}}</td> \
+        <td>{{mediasNames}}</td> \
+        <td data-class="{empty: isEmpty}">{{targetGroups}}</td> \
+        <td>{{item.lastRefresh | dateFormat}}</td> \
+        <td>{{item.reach * 100}}%</td> \
+        <td> \
+        <div class="inline-block pages">{{item.pagesPerUser}}</div> \
+        <div data-include="\'drop_down.html\'" class="inline-block pull-right"></div> \
+        </td>',
         controllerAs: 'rowCtrl',
         controller: function ($scope) {
             $scope.isChecked = false;
@@ -67,9 +67,7 @@ app.directive("row", function () {
             $scope.mediasNames = '';
 
             angular.forEach($scope.item.medias, function (media) {
-                $scope.mediasNames
-                    ? $scope.mediasNames = $scope.mediasNames.concat(', ', media.name)
-                    : $scope.mediasNames = media.name;
+                $scope.mediasNames ? $scope.mediasNames = $scope.mediasNames.concat(', ', media.name) : $scope.mediasNames = media.name;
             });
 
             angular.forEach($scope.item.targetGroup, function (group) {
@@ -77,7 +75,7 @@ app.directive("row", function () {
             }, this);
 
             $scope.isEmpty = !$scope.targetGroups;
-            if (!$scope.targetGroups) $scope.targetGroups = 'None';
+            if (!$scope.targetGroups) {$scope.targetGroups = 'None';}
         }
     };
 });
