@@ -1,28 +1,39 @@
 var app = angular.module("testJS", []);
 
 app.controller('testJSCtrl', function ($scope, $http) {
-    $http.get('items.json').then(function(itemCollection) {
-        $scope.itemCollection = itemCollection.data;
-    });
+    $scope.checkedItemIdList = [];
     $scope.isAllChecked = false;
 
-    $scope.allCheckedClicked = function () {
+    $http.get('items.json').then(function (itemCollection) {
+        $scope.itemCollection = itemCollection.data;
+    });
+
+    $scope.onAllCheckClicked = function () {
+        $scope.checkedItemIdList = [];
         angular.forEach($scope.itemCollection, function (item) {
             item.isChecked = $scope.isAllChecked;
+            $scope.isAllChecked && $scope.checkedItemIdList.push(item.id);
         });
     };
 
-    $scope.onCheckBoxChanged = function () {
-        $scope.isAllChecked = $scope.itemCollection.every(function (item) {
-            return item.isChecked;
+    $scope.onCheckboxChanged = function () {
+        $scope.checkedItemIdList = [];
+
+        angular.forEach($scope.itemCollection, function (item) {
+            if (item.isChecked) $scope.checkedItemIdList.push(item.id);
         });
+
+        $scope.isAllChecked = $scope.checkedItemIdList.length === $scope.itemCollection.length;
+    };
+
+    $scope.onRefreshClicked = function (id) {
+        var idListToRefresh = id ? [id] : $scope.checkedItemIdList;
     };
 });
 
 app.directive("row", function () {
     return {
         templateUrl: 'row.html',
-        controllerAs: 'rowCtrl',
         controller: function ($scope) {
             $scope.item.isChecked = false;
             $scope.isEmpty = false;
@@ -38,8 +49,16 @@ app.directive("row", function () {
             }, this);
 
             $scope.isEmpty = !$scope.targetGroups;
-            if (!$scope.targetGroups) {$scope.targetGroups = 'None';}
+            if (!$scope.targetGroups) {
+                $scope.targetGroups = 'None';
+            }
         }
+    };
+});
+
+app.directive('dropDown', function () {
+    return {
+        templateUrl: 'drop_down.html'
     };
 });
 

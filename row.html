@@ -1,4 +1,4 @@
-<td><label><input type="checkbox" data-ng-model="item.isChecked" data-ng-change="onCheckBoxChanged()" /></label></td>
+<td><label><input type="checkbox" data-ng-model="item.isChecked" data-ng-change="onCheckboxChanged(item.id)" /></label></td>
 <td>{{item.name}}</td>
 <td>{{mediasNames}}</td>
 <td data-ng-class="{empty: isEmpty}">{{targetGroups}}</td>
@@ -6,5 +6,5 @@
 <td>{{item.reach * 100}}%</td>
 <td>
     <div class="inline-block pages">{{item.pagesPerUser}}</div>
-    <div data-ng-include="'drop_down.html'" class="inline-block pull-right"></div>
+    <div drop_down data-ng-model='item' class="inline-block pull-right"></div>
 </td>
