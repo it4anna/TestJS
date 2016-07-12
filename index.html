@@ -13,12 +13,14 @@
     <!-- Custom JS -->
     <script src="app.js"></script>
 </head>
-<body data-ng-app="testJS"  data-ng-controller="testJSCtrl" >
+<body data-ng-app="testJS" data-ng-controller="testJSCtrl">
 
 <div data-ng-include="'menu.html'" class="inline-block pull-right menu"></div>
 <table class="meadia_table">
     <tr>
-        <th><label><input type="checkbox" data-ng-click="onAllCheckClicked()" data-ng-model="isAllChecked"/></label></th>
+        <th>
+            <label><input type="checkbox" data-ng-click="onAllCheckClicked()" data-ng-model="isAllChecked"/></label>
+        </th>
         <th>Name</th>
         <th>Medias</th>
         <th>TargetGroup</th>

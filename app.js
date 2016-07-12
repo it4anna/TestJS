@@ -1,4 +1,4 @@
-var app = angular.module("testJS", []);
+var app = angular.module('testJS', []);
 
 app.controller('testJSCtrl', function ($scope, $http) {
     $scope.checkedItemIdList = [];
@@ -31,7 +31,7 @@ app.controller('testJSCtrl', function ($scope, $http) {
     };
 });
 
-app.directive("row", function () {
+app.directive('row', function () {
     return {
         templateUrl: 'row.html',
         controller: function ($scope) {
@@ -71,12 +71,12 @@ app.filter('dateFormat', function ($filter) {
             diffSeconds = (((new Date()).getTime() - date.getTime()) / 1000),
             diffDays = Math.round(diffSeconds / dayMillisec);
 
-        return diffSeconds < minuteMillisec && "just now" ||
-            diffSeconds < hourMillisec && Math.round(diffSeconds / minuteMillisec) + " minute(s) ago" ||
-            diffSeconds < dayMillisec && Math.round(diffSeconds / minuteMillisec) + " hour(s) ago" ||
-            diffDays == 1 && "Yesterday" ||
-            diffDays < 7 && diffDays + " day(s) ago" ||
-            diffDays < 31 && Math.ceil(diffDays / 7) + " week(s) ago" ||
+        return diffSeconds < minuteMillisec && 'just now' ||
+            diffSeconds < hourMillisec && Math.round(diffSeconds / minuteMillisec) + ' minute(s) ago' ||
+            diffSeconds < dayMillisec && Math.round(diffSeconds / minuteMillisec) + ' hour(s) ago' ||
+            diffDays == 1 && 'Yesterday' ||
+            diffDays < 7 && diffDays + ' day(s) ago' ||
+            diffDays < 31 && Math.ceil(diffDays / 7) + ' week(s) ago' ||
             $filter('date')(date);
     };
 });
