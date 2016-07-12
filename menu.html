@@ -1,4 +1,4 @@
-<button type="button" class="btn" data-ng-click="onRefreshClicked()">
+<button type="button" class="btn" data-ng-class="{disabled: !checkedItemIdList.length}" data-ng-click="onRefreshClicked()">
     <span class="glyphicon glyphicon-refresh"></span>
 </button>
 <button type="button" class="btn disabled"><span class="glyphicon glyphicon-download"></span></button>

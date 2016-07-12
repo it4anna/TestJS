@@ -7,6 +7,7 @@
 <td>{{item.lastRefresh | dateFormat}}</td>
 <td>{{item.reach * 100}}%</td>
 <td>
-    <div class="inline-block pages">{{item.pagesPerUser}}</div>
+    <div class="inline-block pages">{{item.pagesPerUser | number}}</div>
+    <div class="loader-container" data-ng-class="{notLoads: !item.isLoading}"><div class="loader"></div>{{item.percent}}%</div>
     <div drop_down data-ng-model="item" class="inline-block pull-right"></div>
 </td>

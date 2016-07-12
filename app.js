@@ -1,6 +1,6 @@
 var app = angular.module('testJS', []);
 
-app.controller('testJSCtrl', function ($scope, $http) {
+app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
     $scope.checkedItemIdList = [];
     $scope.isAllChecked = false;
 
@@ -28,14 +28,42 @@ app.controller('testJSCtrl', function ($scope, $http) {
 
     $scope.onRefreshClicked = function (id) {
         var idListToRefresh = id ? [id] : $scope.checkedItemIdList;
+
+        angular.forEach(idListToRefresh, function (id) {
+            var item = getItemById(id),
+                stop;
+
+            /*Request-response behaviours emulation*/
+            stop = $interval(function () {
+                item.percent += Math.round(Math.random()*10);
+            }, 100);
+
+            item.isLoading = true;
+
+            $scope.$watch('item.percent', function() {
+                if (item.percent >= 100) {
+                    $interval.cancel(stop);
+                    item.isLoading = false;
+                    item.time = new Date();
+                }
+            });
+        });
     };
+
+    function getItemById(id) {
+        return $filter('filter')($scope.itemCollection, function (item) {
+            return item.id === id;
+        })[0];
+    }
 });
 
 app.directive('row', function () {
     return {
         templateUrl: 'row.html',
         controller: function ($scope) {
+            $scope.item.isLoading = false;
             $scope.item.isChecked = false;
+            $scope.item.percent = 0;
             $scope.isEmpty = false;
             $scope.targetGroups = '';
             $scope.mediasNames = '';
