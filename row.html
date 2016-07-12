@@ -1,0 +1,10 @@
+<td><label><input type="checkbox" data-ng-model="item.isChecked" data-ng-change="onCheckBoxChanged()" /></label></td>
+<td>{{item.name}}</td>
+<td>{{mediasNames}}</td>
+<td data-ng-class="{empty: isEmpty}">{{targetGroups}}</td>
+<td>{{item.lastRefresh | dateFormat}}</td>
+<td>{{item.reach * 100}}%</td>
+<td>
+    <div class="inline-block pages">{{item.pagesPerUser}}</div>
+    <div data-ng-include="'drop_down.html'" class="inline-block pull-right"></div>
+</td>
