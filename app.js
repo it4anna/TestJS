@@ -4,7 +4,7 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
     $scope.checkedItemIdList = [];
     $scope.isAllChecked = false;
 
-    $http.get('items.json').then(function (itemCollection) {
+    $http.get('data/items.json').then(function (itemCollection) {
         $scope.itemCollection = itemCollection.data;
     });
 
@@ -61,7 +61,7 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
 
 app.directive('row', function () {
     return {
-        templateUrl: 'row.html',
+        templateUrl: 'templates/row.html',
         controller: function ($scope) {
             $scope.item.isLoading = false;
             $scope.item.isChecked = false;
@@ -88,7 +88,7 @@ app.directive('row', function () {
 
 app.directive('dropDown', function () {
     return {
-        templateUrl: 'drop_down.html'
+        templateUrl: 'templates/drop_down.html'
     };
 });
 
