@@ -33,6 +33,8 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
             var item = getItemById(id),
                 stop;
 
+            if(item.isLoading) return;
+
             /*Request-response behaviours emulation*/
             stop = $interval(function () {
                 item.percent += Math.round(Math.random()*10);
