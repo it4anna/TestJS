@@ -34,13 +34,13 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval, $q) {
                 delay = 1500,
                 stop;
 
-            if(item.isLoading) return;
+            if (item.isLoading) return;
             item.isLoading = true;
 
             //Request-response behaviour emulation
             //Request should be sent every 15 seconds, response would contain status and percentage of readiness;
             stop = $interval(function () {
-                item.percent += Math.round(Math.random()*10);
+                item.percent += Math.round(Math.random() * 10);
                 if (item.percent >= 100) {
                     $interval.cancel(stop);
                     item.isLoading = false;
@@ -70,8 +70,8 @@ app.directive('row', function () {
 
             angular.forEach($scope.item.medias, function (media) {
                 $scope.mediasNames
-                  ? $scope.mediasNames = $scope.mediasNames.concat(', ', media.name)
-                  : $scope.mediasNames = media.name;
+                    ? $scope.mediasNames = $scope.mediasNames.concat(', ', media.name)
+                    : $scope.mediasNames = media.name;
             });
 
             angular.forEach($scope.item.targetGroup, function (group) {
