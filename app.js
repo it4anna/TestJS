@@ -34,21 +34,18 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
                 stop;
 
             if(item.isLoading) return;
-
-            /*Request-response behaviours emulation*/
-            stop = $interval(function () {
-                item.percent += Math.round(Math.random()*10);
-            }, 100);
-
             item.isLoading = true;
 
-            $scope.$watch('item.percent', function() {
+            //Request-response behaviour emulation
+            //Request should be sent every 10-15 seconds, response would contain status and percentage of readiness;
+            stop = $interval(function () {
+                item.percent += Math.round(Math.random()*10);
                 if (item.percent >= 100) {
                     $interval.cancel(stop);
                     item.isLoading = false;
-                    item.time = new Date();
+                    item.lastRefresh = new Date();
                 }
-            });
+            }, 1500);
         });
     };
 
