@@ -1,6 +1,6 @@
 var app = angular.module('testJS', []);
 
-app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
+app.controller('testJSCtrl', function ($scope, $http, $filter, $interval, $q) {
     $scope.checkedItemIdList = [];
     $scope.isAllChecked = false;
 
@@ -31,13 +31,14 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
 
         angular.forEach(idListToRefresh, function (id) {
             var item = getItemById(id),
+                delay = 1500,
                 stop;
 
             if(item.isLoading) return;
             item.isLoading = true;
 
             //Request-response behaviour emulation
-            //Request should be sent every 10-15 seconds, response would contain status and percentage of readiness;
+            //Request should be sent every 15 seconds, response would contain status and percentage of readiness;
             stop = $interval(function () {
                 item.percent += Math.round(Math.random()*10);
                 if (item.percent >= 100) {
@@ -45,7 +46,7 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval) {
                     item.isLoading = false;
                     item.lastRefresh = new Date();
                 }
-            }, 1500);
+            }, delay);
         });
     };
 
@@ -68,7 +69,9 @@ app.directive('row', function () {
             $scope.mediasNames = '';
 
             angular.forEach($scope.item.medias, function (media) {
-                $scope.mediasNames ? $scope.mediasNames = $scope.mediasNames.concat(', ', media.name) : $scope.mediasNames = media.name;
+                $scope.mediasNames
+                  ? $scope.mediasNames = $scope.mediasNames.concat(', ', media.name)
+                  : $scope.mediasNames = media.name;
             });
 
             angular.forEach($scope.item.targetGroup, function (group) {
@@ -85,7 +88,7 @@ app.directive('row', function () {
 
 app.directive('dropDown', function () {
     return {
-        templateUrl: 'templates/drop_down.html'
+        templateUrl: 'templates/drop-down.html'
     };
 });
 
@@ -95,15 +98,19 @@ app.filter('dateFormat', function ($filter) {
             minuteMillisec = 60,
             hourMillisec = 3600,
             dayMillisec = 86400,
+            minutes = hourMillisec && Math.round(diffSeconds / minuteMillisec),
+            hours = dayMillisec && Math.round(diffSeconds / minuteMillisec),
+            days = 7 && diffDays,
+            weeks = 31 && Math.ceil(diffDays / 7),
             diffSeconds = (((new Date()).getTime() - date.getTime()) / 1000),
             diffDays = Math.round(diffSeconds / dayMillisec);
 
         return diffSeconds < minuteMillisec && 'just now' ||
-            diffSeconds < hourMillisec && Math.round(diffSeconds / minuteMillisec) + ' minute(s) ago' ||
-            diffSeconds < dayMillisec && Math.round(diffSeconds / minuteMillisec) + ' hour(s) ago' ||
+            diffSeconds < minutes + ' minute(s) ago' ||
+            diffSeconds < hours + ' hour(s) ago' ||
             diffDays == 1 && 'Yesterday' ||
-            diffDays < 7 && diffDays + ' day(s) ago' ||
-            diffDays < 31 && Math.ceil(diffDays / 7) + ' week(s) ago' ||
+            diffDays < days + ' day(s) ago' ||
+            diffDays < weeks + ' week(s) ago' ||
             $filter('date')(date);
     };
 });
