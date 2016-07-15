@@ -81,10 +81,11 @@ ul {
 
 /*icon search input*/
 .icon-addon {
-    position: relative;
-    color: #555;
+    vertical-align: middle;
     display: inline-block;
+    position: relative;
     width: 140px;
+    color: #555;
 }
 
 .icon-addon:after,

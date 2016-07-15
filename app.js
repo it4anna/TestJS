@@ -1,6 +1,7 @@
 var app = angular.module('testJS', []);
 
 app.controller('testJSCtrl', function ($scope, $http, $filter, $interval, $q) {
+    var delay = 60000;
     $scope.checkedItemIdList = [];
     $scope.isAllChecked = false;
 
@@ -31,16 +32,16 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval, $q) {
 
         angular.forEach(idListToRefresh, function (id) {
             var item = getItemById(id),
-                delay = 1500,
                 stop;
 
             if (item.isLoading) return;
             item.isLoading = true;
+            item.percent = 0;
 
             //Request-response behaviour emulation:
-            //Request should be sent every 15 seconds, response would contain status and percentage of readiness;
-            //Then status become true, loader hides and new data set;
-            //As far as every media kit is refreshed, it model data are replaced with refreshed one;
+            //Request should be sent every 15 seconds, response would contain status and percentage of readiness.
+            //Then status become true, loader hides and new data set.
+            //As far as every media kit is refreshed, it model data are replaced with refreshed one.
             stop = $interval(function () {
                 item.percent += Math.round(Math.random() * 10);
                 if (item.percent >= 100) {
@@ -48,9 +49,15 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval, $q) {
                     item.isLoading = false;
                     item.lastRefresh = new Date();
                 }
-            }, delay);
+            }, 1500);
         });
     };
+
+    //This is to update refreshed time according current time;
+    $interval(function () {
+        //Safe apply.
+        ($scope.$$phase || $scope.$root.$$phase) ? function () {} : $scope.$apply(fn);
+    }, delay);
 
     function getItemById(id) {
         return $filter('filter')($scope.itemCollection, function (item) {
@@ -71,7 +78,7 @@ app.directive('row', function () {
             $scope.mediasNames = '';
 
             angular.forEach($scope.item.medias, function (media) {
-                $scope.mediasNames
+                $scope.mediasName
                     ? $scope.mediasNames = $scope.mediasNames.concat(', ', media.name)
                     : $scope.mediasNames = media.name;
             });
@@ -100,19 +107,19 @@ app.filter('dateFormat', function ($filter) {
             minuteMillisec = 60,
             hourMillisec = 3600,
             dayMillisec = 86400,
-            minutes = hourMillisec && Math.round(diffSeconds / minuteMillisec),
-            hours = dayMillisec && Math.round(diffSeconds / minuteMillisec),
-            days = 7 && diffDays,
-            weeks = 31 && Math.ceil(diffDays / 7),
+            minute = hourMillisec && Math.round(diffSeconds / minuteMillisec),
+            hour = dayMillisec && Math.round(diffSeconds / minuteMillisec),
+            day = 7 && diffDays,
+            week = 31 && Math.ceil(diffDays / 7),
             diffSeconds = (((new Date()).getTime() - date.getTime()) / 1000),
             diffDays = Math.round(diffSeconds / dayMillisec);
 
         return diffSeconds < minuteMillisec && 'just now' ||
-            diffSeconds < minutes + ' minute(s) ago' ||
-            diffSeconds < hours + ' hour(s) ago' ||
+            diffSeconds < minute + ' minute(s) ago' ||
+            diffSeconds < hour + ' hour(s) ago' ||
             diffDays == 1 && 'Yesterday' ||
-            diffDays < days + ' day(s) ago' ||
-            diffDays < weeks + ' week(s) ago' ||
+            diffDays < day + ' day(s) ago' ||
+            diffDays < week + ' week(s) ago' ||
             $filter('date')(date);
     };
 });
