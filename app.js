@@ -37,8 +37,10 @@ app.controller('testJSCtrl', function ($scope, $http, $filter, $interval, $q) {
             if (item.isLoading) return;
             item.isLoading = true;
 
-            //Request-response behaviour emulation
+            //Request-response behaviour emulation:
             //Request should be sent every 15 seconds, response would contain status and percentage of readiness;
+            //Then status become true, loader hides and new data set;
+            //As far as every media kit is refreshed, it model data are replaced with refreshed one;
             stop = $interval(function () {
                 item.percent += Math.round(Math.random() * 10);
                 if (item.percent >= 100) {

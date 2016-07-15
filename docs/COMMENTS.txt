@@ -1,0 +1,9 @@
+I  believe it would be great to use web sockets connection to not spent much time for connection every
+ 15 second for every single media kit response (if it means users have many media kits mostly).
+
+I preferred to use css loader as most lightweight solution.
+
+If I had more time I would have added:
+  - unit tests
+  - http-service
+
